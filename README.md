@@ -148,7 +148,7 @@ pip install -r requirements.txt
 4. Run the application:
 
 ```bash
-python Cryptext_Gen_Pro.py
+python main.py
 ```
 
 > **Note:** The passphrase generator requires the `eff_file.wordlist`. Ensure it exists in `assets/wordlist/eff_file.wordlist`.
