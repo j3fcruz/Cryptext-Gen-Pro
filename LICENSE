@@ -1,21 +1,49 @@
-MIT License
+# MIT License (Extended Professional Version)
 
 Copyright (c) 2025 Marco Polo
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
+associated documentation files (the "Software"), to deal in the Software **without restriction**, 
+including without limitation the rights to **use, copy, modify, merge, publish, distribute, 
+sublicense, and/or sell copies of the Software**, and to **permit persons to whom the Software is 
+furnished to do so**, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. **Inclusion of License**
+   The above copyright notice and this permission notice shall be included in **all copies or 
+   substantial portions of the Software**, including any derivative works or modifications.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. **Scope of Use**
+   The Software may be used for **personal, educational, commercial, or research purposes**, 
+   without limitation. Any usage that violates applicable law, or any malicious use to compromise 
+   security or privacy, is strictly prohibited.
+
+3. **Warranty Disclaimer**
+   THE SOFTWARE IS PROVIDED "AS IS", **WITHOUT WARRANTY OF ANY KIND**, EXPRESS OR IMPLIED, 
+   INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF **MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+   PURPOSE, AND NONINFRINGEMENT**. The entire risk as to the quality and performance of the 
+   Software is with the user.
+
+4. **Limitation of Liability**
+   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER 
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN 
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+5. **Professional Use & Attribution**
+   - If you redistribute the Software or derivative works in **binary or source form**, proper 
+     **credit must be given** to the original author (Marco Polo).
+   - You may not use the name of the author or contributors to **endorse or promote products 
+     derived from this Software** without specific prior written permission.
+
+6. **Security & Compliance Notice**
+   Users are responsible for ensuring that the Software and its derivatives **comply with local laws, 
+   export regulations, and organizational security policies**. The author does not assume 
+   responsibility for misuse or legal violations.
+
+7. **Modification & Contribution**
+   Modifications and contributions are encouraged. By contributing back to this Software, you 
+   **grant the copyright holder a perpetual, worldwide, royalty-free license** to use, modify, 
+   and distribute your contributions under this License.
+
+8. **Acceptance of Terms**
+   Use of the Software constitutes **acceptance of this License**. If you do not agree with any 
+   terms, you may not use, copy, modify, or distribute the Software.
