@@ -1,0 +1,72 @@
+name: Quality and Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Python quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest python-dotenv
+
+      - name: Compile Python sources
+        run: python -m compileall -q Cryptext_Gen_Pro.py app_config core dialogs ui utils
+
+      - name: Run unit tests
+        run: pytest -q
+
+  windows-build:
+    name: Windows PyInstaller smoke build
+    runs-on: windows-latest
+    needs: quality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build application
+        run: pyinstaller --onedir --noconsole --clean --icon="assets/icons/icon.ico" --name="Cryptext_Gen_Pro" --add-data "assets;assets" --add-data "app_config;app_config" --exclude-module PySide6 Cryptext_Gen_Pro.py
+
+      - name: Verify executable
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist/Cryptext_Gen_Pro/Cryptext_Gen_Pro.exe")) {
+            throw "Expected executable was not created."
+          }
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cryptext-Gen-Pro-windows
+          path: dist/Cryptext_Gen_Pro/
+          if-no-files-found: error
