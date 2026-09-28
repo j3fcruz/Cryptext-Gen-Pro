@@ -62,9 +62,21 @@ jobs:
       - name: Verify executable
         shell: pwsh
         run: |
-          if (-not (Test-Path "dist/Cryptext_Gen_Pro/Cryptext_Gen_Pro.exe")) {
+          $exe = "dist/Cryptext_Gen_Pro/Cryptext_Gen_Pro.exe"
+          if (-not (Test-Path $exe)) {
             throw "Expected executable was not created."
           }
+
+      - name: Runtime smoke test
+        shell: pwsh
+        run: |
+          $exe = Resolve-Path "dist/Cryptext_Gen_Pro/Cryptext_Gen_Pro.exe"
+          $process = Start-Process -FilePath $exe -PassThru
+          Start-Sleep -Seconds 8
+          if ($process.HasExited) {
+            throw "Executable exited during startup smoke test with code $($process.ExitCode)."
+          }
+          Stop-Process -Id $process.Id -Force
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
