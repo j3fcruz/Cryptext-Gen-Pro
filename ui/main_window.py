@@ -38,6 +38,8 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 def setup_logger(log_file="CryptextGenPro.log"):
     logger = logging.getLogger(APP_NAME)
     logger.setLevel(logging.INFO)
+    if logger.handlers:
+        return logger
 
     formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
@@ -80,11 +82,7 @@ class SecurePassPro(QMainWindow):
         self.logger = setup_logger()
         self.logger.info(f"Launching {APP_NAME} v{APP_VERSION}")
 
-        try:
-            self.DICEWARE_WORDS = self._load_wordlist(r"assets\wordlist\eff_file.wordlist")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to load wordlist:\n{e}")
-            self.DICEWARE_WORDS = []
+        self.DICEWARE_WORDS = self._load_wordlist()
 
         # Initialize core components
         self.password_gen = PasswordGenerator()
@@ -97,8 +95,8 @@ class SecurePassPro(QMainWindow):
         self.current_qr_image = None
         self.logo_path = LOGO_PATH
 
-        # Load wordlist safely
-        self.passphrase_gen = PassphraseGenerator(self._load_wordlist())
+        # Reuse the already loaded wordlist so startup is consistent across platforms.
+        self.passphrase_gen = PassphraseGenerator(self.DICEWARE_WORDS)
 
         # State tracking
         self.current_qr_image = None
