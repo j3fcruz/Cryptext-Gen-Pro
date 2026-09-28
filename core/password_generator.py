@@ -2,7 +2,7 @@
 """Password generation logic - cryptographically secure"""
 import string
 import secrets
-from app_config.app_config import SYMBOLS, MAX_GENERATION_ATTEMPTS, LOGO_PATH
+from app_config.app_config import SYMBOLS, LOGO_PATH
 
 
 class PasswordGenerator:
@@ -88,7 +88,7 @@ class PasswordGenerator:
             used_chars.add(ch)
             last_group = name
 
-        return self._shuffle_no_consecutive(password_chars)
+        return "".join(ch for _, ch in password_chars)
 
     def _build_charset(self, use_upper, use_lower, use_numbers, use_symbols):
         """Build character set from options"""
@@ -132,20 +132,3 @@ class PasswordGenerator:
     def set_logo_path(self, path):
         """Set the logo path for QR code embedding"""
         self.logo_path = path
-
-    def _shuffle_no_consecutive(self, password_chars):
-        """Shuffle ensuring no consecutive same types
-
-        Uses the operating system CSPRNG via secrets.SystemRandom.
-        """
-        rng = secrets.SystemRandom()
-        for attempt in range(MAX_GENERATION_ATTEMPTS):
-            rng.shuffle(password_chars)
-            # Check if no two consecutive chars are from same type
-            if all(password_chars[i][0] != password_chars[i + 1][0]
-                   for i in range(len(password_chars) - 1)):
-                return "".join(ch for _, ch in password_chars)
-
-        # Fallback: return shuffled even if not perfect
-        rng.shuffle(password_chars)
-        return "".join(ch for _, ch in password_chars)
