@@ -97,7 +97,6 @@ class ControlPanel(QWidget):
         # Password Tab Signals
         self.password_tab.generate_btn.clicked.connect(self.on_generate_password)
         self.password_tab.copy_btn.clicked.connect(self.on_copy_password)
-        self.password_tab.visibility_btn.clicked.connect(self.on_toggle_password_visibility)
         self.password_tab.upload_qr_btn.clicked.connect(self.on_upload_qr)
         self.password_tab.save_qr_btn.clicked.connect(self.on_save_qr)
         self.password_tab.scan_qr_btn.clicked.connect(self.on_scan_qr)

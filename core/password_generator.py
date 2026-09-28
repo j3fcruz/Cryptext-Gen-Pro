@@ -2,8 +2,7 @@
 """Password generation logic - cryptographically secure"""
 import string
 import secrets
-import random
-from app_config.app_config import SYMBOLS, MAX_GENERATION_ATTEMPTS, LOGO_PATH
+from app_config.app_config import SYMBOLS, LOGO_PATH
 
 
 class PasswordGenerator:
@@ -29,11 +28,19 @@ class PasswordGenerator:
         Raises:
             ValueError: If no character type selected
         """
-        charset = self._build_charset(use_upper, use_lower, use_numbers, use_symbols)
-        if not charset:
+        groups = self._build_groups(use_upper, use_lower, use_numbers, use_symbols)
+        if not groups:
             raise ValueError("At least one character type must be selected")
+        if length < len(groups):
+            raise ValueError("Password length is too short for the selected character types")
 
-        return "".join(secrets.choice(charset) for _ in range(length))
+        # Guarantee at least one character from every selected group, then fill
+        # the remaining positions using the combined charset.
+        chars = [secrets.choice(group_chars) for _, group_chars in groups]
+        charset = "".join(group_chars for _, group_chars in groups)
+        chars.extend(secrets.choice(charset) for _ in range(length - len(chars)))
+        secrets.SystemRandom().shuffle(chars)
+        return "".join(chars)
 
     def generate_advanced(self, length, use_upper=True, use_lower=True, use_numbers=True, use_symbols=True):
         """Generate password with no consecutive types and no repetitions
@@ -81,7 +88,7 @@ class PasswordGenerator:
             used_chars.add(ch)
             last_group = name
 
-        return self._shuffle_no_consecutive(password_chars)
+        return "".join(ch for _, ch in password_chars)
 
     def _build_charset(self, use_upper, use_lower, use_numbers, use_symbols):
         """Build character set from options"""
@@ -125,19 +132,3 @@ class PasswordGenerator:
     def set_logo_path(self, path):
         """Set the logo path for QR code embedding"""
         self.logo_path = path
-
-    def _shuffle_no_consecutive(self, password_chars):
-        """Shuffle ensuring no consecutive same types
-
-        Uses random.shuffle for better performance than manual implementation
-        """
-        for attempt in range(MAX_GENERATION_ATTEMPTS):
-            random.shuffle(password_chars)
-            # Check if no two consecutive chars are from same type
-            if all(password_chars[i][0] != password_chars[i + 1][0]
-                   for i in range(len(password_chars) - 1)):
-                return "".join(ch for _, ch in password_chars)
-
-        # Fallback: return shuffled even if not perfect
-        random.shuffle(password_chars)
-        return "".join(ch for _, ch in password_chars)
