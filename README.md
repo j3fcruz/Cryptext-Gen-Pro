@@ -9,7 +9,7 @@
 ![Status](https://img.shields.io/badge/status-stable-success)
 ![Build](https://img.shields.io/badge/build-PyInstaller-blue)
 
-**Cryptext Gen Pro** is a professional-grade password and passphrase generator with QR code support, designed to help users generate, manage, and securely store credentials with ease. Built with Python and PyQt5, it offers modular architecture, robust encryption, and a modern interface for both personal and enterprise use.
+**Cryptext Gen Pro** is a professional-grade password and passphrase generator with QR code support, designed to help users generate, manage, and securely store credentials with ease. Built with Python and PyQt5, it offers modular architecture, cryptographically secure credential generation, QR tooling, and a modern interface.
 
 ---
 
@@ -19,7 +19,7 @@
 PROJECT_STRUCTURE:
 cryptex_gen_pro/
 │
-├── main.py                          # Application entry point
+├── Cryptext_Gen_Pro.py              # Application entry point
 │
 ├── app_config/
 │   ├── __init__.py
@@ -88,8 +88,9 @@ cryptex_gen_pro/
 
 ### 🔒 Security
 
-* **AES-256-GCM encryption** for sensitive clipboard operations.
-* HMAC verification for QR integrity.
+* Password generation uses Python's `secrets` CSPRNG.
+* Generated QR codes encode the current password/passphrase as plain QR payloads; treat saved QR images as sensitive credentials.
+* Clipboard copy is plain-text and remains in the system clipboard until replaced or cleared by the OS/user.
 * Wordlist fallback ensures passphrase generation reliability.
 
 ### 🧩 Architecture
@@ -148,7 +149,7 @@ pip install -r requirements.txt
 4. Run the application:
 
 ```bash
-python main.py
+python Cryptext_Gen_Pro.py
 ```
 
 > **Note:** The passphrase generator requires the `eff_file.wordlist`. Ensure it exists in `assets/wordlist/eff_file.wordlist`.
@@ -167,7 +168,7 @@ pyinstaller --onedir --noconsole --clean --uac-admin \
     --add-data "assets;assets" \
     --add-data "app_config;app_config" \
     --exclude-module PySide6 \
-    main.py
+    Cryptext_Gen_Pro.py
 ```
 
 * **--onedir:** Creates folder with executable + dependencies
@@ -212,6 +213,18 @@ Install via pip:
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+## ✅ Continuous Integration
+
+GitHub Actions runs on pushes and pull requests to `main`:
+
+* Python source compilation and unit tests on Ubuntu.
+* A Windows PyInstaller smoke build.
+* Upload of the packaged Windows build as a workflow artifact.
+
+The workflow can also be started manually with **Run workflow** from the Actions tab.
 
 ---
 
